@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import StarWarsCharacters from './components/StarWarsCharacters'
 import Background from "./components/Background";
 import './App.css'
@@ -9,6 +7,7 @@ function App() {
 
   return (
     <>
+      <Background/>
       {/* <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -25,8 +24,7 @@ function App() {
         <p>
           Hello World 
         </p> */}
-        <Background/>
-        <div className="container">
+        <div className="container font-family">
           <StarWarsCharacters/>
         </div>
       {/* </div> */}

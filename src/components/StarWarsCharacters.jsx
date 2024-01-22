@@ -1,40 +1,129 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, Typography, CircularProgress, CardActionArea } from '@mui/material';
+import { blue, blueGrey } from '@mui/material/colors';
+import './StarWarsCharacters.css';
 import axios from 'axios';
+import CharacterDetailsModal from './CharacterDetailsModal';
 
 const StarWarsCharacters = () => {
   const [characters, setCharacters] = useState([]);
   const [randomPhotoUrls, setRandomPhotoUrls] = useState([]);
-  const [species, setSpecies] = useState([]);
+  const [imagesLoading, setImagesLoading] = useState([]); // New state to track individual image loading
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
+  const [homeworld, setHomeworld] = useState(null);
+  const [homeworldLoading, setHomeworldLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fetchCharacters = async () => {
     try {
       const response = await axios.get('https://swapi.dev/api/people/');
-      console.log(response.data.results)
-      const fetchedCharacters = response.data.results; 
+      const fetchedCharacters = response.data.results;
       setCharacters(fetchedCharacters);
+
       const urls = fetchedCharacters.map(() => `https://picsum.photos/300/300?random=${Math.random()}`);
       setRandomPhotoUrls(urls);
     } catch (error) {
       console.error('Error fetching data:', error);
-    }
+    } 
   };
 
   useEffect(() => {
     fetchCharacters();
   }, []);
 
+  useEffect(() => {
+    if (characters.length) {
+      setImagesLoading(new Array(characters.length).fill(true));
+
+      const imagePromises = randomPhotoUrls.map((url, index) => new Promise((resolve) => {
+        const img = new Image();
+        img.src = url;
+        img.onload = () => {
+          resolve(url);
+          setImagesLoading(prev => {
+            const updated = [...prev];
+            updated[index] = false;
+            return updated;
+          });
+        };
+      }));
+
+      Promise.all(imagePromises)
+        .then(() => setLoading(false))
+        .catch((error) => console.error('Error loading images:', error));
+    }
+  }, [randomPhotoUrls, characters.length]);
+
+  const getCardColor = (species) => {
+    const speciesColors = {
+      'https://swapi.dev/api/species/2/': blue[900],
+    };
+
+    return speciesColors[species] || blueGrey[900];
+  };
+
+  const openModal = async (character) => {
+    setSelectedCharacter(character);
+    // setIsModalOpen(true);
+    setHomeworldLoading(true); 
+
+    try {
+      const homeworldResponse = await axios.get(character.homeworld);
+      setHomeworld(homeworldResponse.data);
+    } catch (error) {
+      console.error('Error fetching homeworld data:', error);
+    } finally {
+      setHomeworldLoading(false); // Stop loading after API call
+      setIsModalOpen(true); // Open the modal after data is fetched
+    }
+  };
+
+  const closeModal = () => {
+    setSelectedCharacter(null);
+    setIsModalOpen(false);
+  };
+
   return (
-    <div style={{ display: 'flex',flexWrap: 'wrap', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
       {characters.map((character, index) => (
         <Card
           key={character.name}
-          style={{ margin: '28px'}}
-          // Add onClick to show character details modal
+          className="character-card"
+          style={{
+            margin: '28px',
+            backgroundColor: getCardColor(character.species[0]),
+            borderRadius: '5px',
+            width: '330px',
+            height: '420px',
+          }}
+          sx={{
+            '&:hover': {
+              transform: 'scale(1.05)',
+              transition: 'transform 0.3s ease-in-out',
+            },
+          }}
         >
-          <img src={randomPhotoUrls[index]} alt={character.name} />
+          <CardActionArea onClick={() => openModal(character)}>
+            <CardContent>
+              <Typography variant="h5" sx={{ fontFamily: 'Noto Sans Tifinagh', color: 'white' }}>
+                {character.name}
+              </Typography>
+              {imagesLoading[index] ? (
+                <CircularProgress />
+              ) : (
+                <img src={randomPhotoUrls[index]} alt={character.name} style={{ borderRadius: '5px' }} />
+              )}
+            </CardContent>
+          </CardActionArea>
         </Card>
       ))}
+        <CharacterDetailsModal
+        character={selectedCharacter}
+        homeworld={homeworld}
+        open={isModalOpen}
+        handleClose={closeModal}
+        loading={homeworldLoading}
+      />
     </div>
   );
 };
