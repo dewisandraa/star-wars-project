@@ -1,4 +1,3 @@
-import { useState } from "react";
 import StarWarsCharacters from "./components/StarWarsCharacters";
 import Background from "./components/Background";
 import "./App.css";

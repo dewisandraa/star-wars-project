@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { Modal, Box, Typography, CircularProgress } from "@mui/material";
 
 const formatDate = (dateString) => {
@@ -13,8 +14,6 @@ const CharacterDetailsModal = ({
   handleClose,
   loading,
 }) => {
-  console.log("Loading:", loading);
-
   if (!character) return null;
 
   const modalStyle = {
@@ -32,13 +31,9 @@ const CharacterDetailsModal = ({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+    textAlign: "center",
   };
 
-  const labelStyle = {
-    display: "flex",
-    justifyContent: "space-between",
-    width: "100%", // Ensure the labels span the full width
-  };
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -71,3 +66,23 @@ const CharacterDetailsModal = ({
 };
 
 export default CharacterDetailsModal;
+
+CharacterDetailsModal.propTypes = {
+  character: PropTypes.shape({
+    name: PropTypes.string,
+    height: PropTypes.string,
+    mass: PropTypes.string,
+    created: PropTypes.string,
+    films: PropTypes.arrayOf(PropTypes.string),
+    birth_year: PropTypes.string,
+  }),
+  homeworld: PropTypes.shape({
+    name: PropTypes.string,
+    terrain: PropTypes.string,
+    climate: PropTypes.string,
+    population: PropTypes.string,
+  }),
+  open: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+};

@@ -5,6 +5,7 @@ import {
   Skeleton,
   Typography,
   CircularProgress,
+  TextField,
   CardActionArea,
 } from "@mui/material";
 import { red, teal } from "@mui/material/colors";
@@ -23,15 +24,19 @@ const StarWarsCharacters = () => {
   const [homeworld, setHomeworld] = useState(null);
   const [homeworldLoading, setHomeworldLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchCharacters = async () => {
     setLoading(true);
     try {
       const response = await axios.get(SWAPI_PEOPLE_API);
       const fetchedCharacters = response.data.results;
-      setCharacters(fetchedCharacters);
-      const urls = fetchedCharacters.map(
-        () => `https://picsum.photos/300/300?random=${Math.random()}`,
+      const filteredCharacters = fetchedCharacters.filter((character) =>
+        character.name.toLowerCase().includes(searchTerm.toLowerCase()),
+      );
+      setCharacters(filteredCharacters);
+      const urls = filteredCharacters.map(
+        (character, index) => `https://picsum.photos/300/300?random=${index}`,
       );
       setRandomPhotoUrls(urls);
     } catch (error) {
@@ -49,13 +54,13 @@ const StarWarsCharacters = () => {
     if (characters.length) {
       setImagesLoading(new Array(characters.length).fill(true));
 
-      const imagePromises = randomPhotoUrls.map(
-        (url, index) =>
+      const imagePromises = characters.map(
+        (character, index) =>
           new Promise((resolve) => {
             const img = new Image();
-            img.src = url;
+            img.src = randomPhotoUrls[index];
             img.onload = () => {
-              resolve(url);
+              resolve(randomPhotoUrls[index]);
               setImagesLoading((prev) => {
                 const updated = [...prev];
                 updated[index] = false;
@@ -69,7 +74,7 @@ const StarWarsCharacters = () => {
         .then(() => setLoading(false))
         .catch((error) => console.error("Error loading images:", error));
     }
-  }, [randomPhotoUrls, characters.length]);
+  }, [randomPhotoUrls, characters]);
 
   const getCardColor = (species) => {
     const speciesColors = {
@@ -100,6 +105,11 @@ const StarWarsCharacters = () => {
     setIsModalOpen(false);
   };
 
+  const handleSearch = (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+    setSearchTerm(searchTerm);
+  };
+
   if (loading) {
     return (
       <div
@@ -119,51 +129,75 @@ const StarWarsCharacters = () => {
     <div
       style={{
         display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "center",
+        flexDirection: "column",
         alignItems: "center",
         minHeight: "100vh",
       }}
     >
-      {characters.map((character, index) => (
-        <Card
-          key={character.name}
-          className="character-card"
-          style={{
-            margin: "28px",
-            backgroundColor: getCardColor(character.species[0]),
-            borderRadius: "5px",
-            width: "330px",
-            height: "370px",
-          }}
-          sx={{
-            "&:hover": {
-              transform: "scale(1.05)",
-              transition: "transform 0.3s ease-in-out",
-            },
-          }}
-        >
-          <CardActionArea onClick={() => openModal(character)}>
-            <CardContent>
-              <Typography
-                variant="h5"
-                sx={{ fontFamily: "Orbitron", color: "white", b: 4 }}
+      <TextField
+        label="Search character"
+        variant="outlined"
+        value={searchTerm}
+        onChange={handleSearch}
+        sx={{ marginY: "20px", width: "300px" }}
+      />
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+        }}
+      >
+        {characters.map(
+          (character, index) =>
+            (character.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              !searchTerm) && (
+              <Card
+                key={character.name}
+                className="character-card"
+                style={{
+                  margin: "28px",
+                  backgroundColor: getCardColor(character.species[0]),
+                  borderRadius: "5px",
+                  width: "330px",
+                  height: "370px",
+                }}
+                sx={{
+                  "&:hover": {
+                    transform: "scale(1.05)",
+                    transition: "transform 0.3s ease-in-out",
+                  },
+                }}
               >
-                {character.name}
-              </Typography>
-              {imagesLoading[index] ? (
-                <Skeleton variant="rectangular" width={300} height={300} /> //
-              ) : (
-                <img
-                  src={randomPhotoUrls[index]}
-                  alt={character.name}
-                  style={{ borderRadius: "5px" }}
-                />
-              )}
-            </CardContent>
-          </CardActionArea>
-        </Card>
-      ))}
+                <CardActionArea onClick={() => openModal(character)}>
+                  <CardContent>
+                    <Typography
+                      variant="h5"
+                      sx={{ fontFamily: "Orbitron", color: "white", b: 4 }}
+                    >
+                      {character.name}
+                    </Typography>
+                    {imagesLoading[index] ? (
+                      <Skeleton
+                        variant="rectangular"
+                        width={300}
+                        height={300}
+                      /> //
+                    ) : (
+                      <img
+                        src={randomPhotoUrls[index]}
+                        alt={character.name}
+                        style={{ borderRadius: "5px" }}
+                      />
+                    )}
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            ),
+        )}
+      </div>
       <CharacterDetailsModal
         character={selectedCharacter}
         homeworld={homeworld}

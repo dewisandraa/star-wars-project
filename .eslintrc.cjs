@@ -20,10 +20,10 @@ module.exports = {
     sourceType: "module",
   },
   plugins: ["react"],
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
+  settings: {
+    react: {
+      version: "detect",
+    },
   },
-  rules: {},
+  rules: {"react/react-in-jsx-scope": "off"},
 };
