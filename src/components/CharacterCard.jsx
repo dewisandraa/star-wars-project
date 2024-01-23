@@ -72,4 +72,13 @@ const CharacterCard = ({
     );
     };
 
+CharacterCard.propTypes = {
+    character: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        species: PropTypes.arrayOf(PropTypes.string).isRequired,
+    }).isRequired,
+    randomPhotoUrl: PropTypes.string.isRequired,
+    openModal: PropTypes.func.isRequired,
+    };
+      
 export default CharacterCard;

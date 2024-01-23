@@ -64,8 +64,6 @@ const CharacterDetailsModal = ({
   )
 }
 
-export default CharacterDetailsModal
-
 CharacterDetailsModal.propTypes = {
   character: PropTypes.shape({
     name: PropTypes.string,
@@ -85,3 +83,6 @@ CharacterDetailsModal.propTypes = {
   handleClose: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
 }
+
+
+export default CharacterDetailsModal
