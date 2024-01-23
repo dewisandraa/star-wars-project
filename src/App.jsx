@@ -1,6 +1,6 @@
-import StarWarsCharacters from "./components/StarWarsCharacters";
-import Background from "./components/Background";
-import "./App.css";
+import StarWarsCharacters from './components/StarWarsCharacters'
+import Background from './components/Background'
+import './App.css'
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
         <StarWarsCharacters />
       </div>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

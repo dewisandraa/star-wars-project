@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from 'prop-types';
-import { Modal, Box, Typography, CircularProgress } from "@mui/material";
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Modal, Box, Typography, CircularProgress } from '@mui/material'
 
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
-};
+const formatDate = dateString => {
+  const date = new Date(dateString)
+  return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
+}
 
 const CharacterDetailsModal = ({
   character,
@@ -14,26 +14,25 @@ const CharacterDetailsModal = ({
   handleClose,
   loading,
 }) => {
-  if (!character) return null;
+  if (!character) return null
 
   const modalStyle = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     width: 400,
     height: 325,
-    bgcolor: "rgba(0, 0, 0, 0.8)",
+    bgcolor: 'rgba(0, 0, 0, 0.8)',
     boxShadow: 20,
     p: 4,
     borderRadius: 2,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
-  };
-
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+  }
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -62,10 +61,10 @@ const CharacterDetailsModal = ({
         )}
       </Box>
     </Modal>
-  );
-};
+  )
+}
 
-export default CharacterDetailsModal;
+export default CharacterDetailsModal
 
 CharacterDetailsModal.propTypes = {
   character: PropTypes.shape({
@@ -85,4 +84,4 @@ CharacterDetailsModal.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-};
+}
