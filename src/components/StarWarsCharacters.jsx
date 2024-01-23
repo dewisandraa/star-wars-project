@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Skeleton, Typography, CircularProgress, CardActionArea } from '@mui/material';
-import { blue, blueGrey } from '@mui/material/colors';
+import { red, teal } from '@mui/material/colors';
 import './StarWarsCharacters.css';
 import axios from 'axios';
 import CharacterDetailsModal from './CharacterDetailsModal';
@@ -63,10 +63,10 @@ const StarWarsCharacters = () => {
 
   const getCardColor = (species) => {
     const speciesColors = {
-      'https://swapi.dev/api/species/2/': blue[900],
+      'https://swapi.dev/api/species/2/': red[700],
     };
 
-    return speciesColors[species] || blueGrey[900];
+    return speciesColors[species] || teal[500];
   };
 
   const openModal = async (character) => {

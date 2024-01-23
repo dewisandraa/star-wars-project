@@ -28,6 +28,12 @@ const CharacterDetailsModal = ({ character, homeworld, open, handleClose, loadin
     justifyContent: 'center',
   };
 
+  const labelStyle = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%', // Ensure the labels span the full width
+  };
+
   return (
     <Modal open={open} onClose={handleClose}>
       <Box sx={modalStyle}>
@@ -35,7 +41,7 @@ const CharacterDetailsModal = ({ character, homeworld, open, handleClose, loadin
             <CircularProgress />
         ) : (
           <>
-            <Typography variant="h4">{character.name}</Typography>
+            <Typography variant="h4"  sx={{ pb: 3 }}>{character.name}</Typography>
             <Typography>Height: {character.height}m</Typography>
             <Typography>Mass: {character.mass}kg</Typography>
             <Typography>Date Added: {formatDate(character.created)}</Typography>
