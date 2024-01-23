@@ -1,35 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, Typography, CircularProgress, CardActionArea } from '@mui/material';
+import { Card, CardContent, Skeleton, Typography, CircularProgress, CardActionArea } from '@mui/material';
 import { blue, blueGrey } from '@mui/material/colors';
 import './StarWarsCharacters.css';
 import axios from 'axios';
 import CharacterDetailsModal from './CharacterDetailsModal';
 
+const SWAPI_PEOPLE_API = 'https://swapi.dev/api/people/';
+
 const StarWarsCharacters = () => {
   const [characters, setCharacters] = useState([]);
   const [randomPhotoUrls, setRandomPhotoUrls] = useState([]);
-  const [imagesLoading, setImagesLoading] = useState([]); // New state to track individual image loading
+  const [loading, setLoading] = useState(true);
+  const [imagesLoading, setImagesLoading] = useState([]);
   const [selectedCharacter, setSelectedCharacter] = useState(null);
   const [homeworld, setHomeworld] = useState(null);
   const [homeworldLoading, setHomeworldLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+
   const fetchCharacters = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get('https://swapi.dev/api/people/');
+      const response = await axios.get(SWAPI_PEOPLE_API);
       const fetchedCharacters = response.data.results;
       setCharacters(fetchedCharacters);
-
       const urls = fetchedCharacters.map(() => `https://picsum.photos/300/300?random=${Math.random()}`);
       setRandomPhotoUrls(urls);
     } catch (error) {
       console.error('Error fetching data:', error);
-    } 
+    }  finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     fetchCharacters();
   }, []);
+
 
   useEffect(() => {
     if (characters.length) {
@@ -64,7 +71,7 @@ const StarWarsCharacters = () => {
 
   const openModal = async (character) => {
     setSelectedCharacter(character);
-    // setIsModalOpen(true);
+    setIsModalOpen(true);
     setHomeworldLoading(true); 
 
     try {
@@ -73,8 +80,8 @@ const StarWarsCharacters = () => {
     } catch (error) {
       console.error('Error fetching homeworld data:', error);
     } finally {
-      setHomeworldLoading(false); // Stop loading after API call
-      setIsModalOpen(true); // Open the modal after data is fetched
+      setHomeworldLoading(false);
+      setIsModalOpen(true);
     }
   };
 
@@ -82,6 +89,14 @@ const StarWarsCharacters = () => {
     setSelectedCharacter(null);
     setIsModalOpen(false);
   };
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <CircularProgress size={50} />
+      </div>
+    );
+  }
 
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
@@ -94,7 +109,7 @@ const StarWarsCharacters = () => {
             backgroundColor: getCardColor(character.species[0]),
             borderRadius: '5px',
             width: '330px',
-            height: '420px',
+            height: '370px',
           }}
           sx={{
             '&:hover': {
@@ -105,11 +120,11 @@ const StarWarsCharacters = () => {
         >
           <CardActionArea onClick={() => openModal(character)}>
             <CardContent>
-              <Typography variant="h5" sx={{ fontFamily: 'Noto Sans Tifinagh', color: 'white' }}>
+              <Typography variant="h5" sx={{ fontFamily: 'Orbitron', color: 'white', b:4}}>
                 {character.name}
               </Typography>
               {imagesLoading[index] ? (
-                <CircularProgress />
+                 <Skeleton variant="rectangular" width={300} height={300} /> //
               ) : (
                 <img src={randomPhotoUrls[index]} alt={character.name} style={{ borderRadius: '5px' }} />
               )}

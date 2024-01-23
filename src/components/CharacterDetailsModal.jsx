@@ -7,6 +7,8 @@ const formatDate = (dateString) => {
 };
 
 const CharacterDetailsModal = ({ character, homeworld, open, handleClose, loading }) => {
+  console.log('Loading:', loading);
+
   if (!character) return null;
 
   const modalStyle = {
@@ -15,39 +17,38 @@ const CharacterDetailsModal = ({ character, homeworld, open, handleClose, loadin
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
+    height: 325,
     bgcolor: 'rgba(0, 0, 0, 0.8)',
     boxShadow: 20,
     p: 4,
     borderRadius: 2,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center', 
+    justifyContent: 'center',
   };
 
-  // Display a loading indicator if the data is still loading
-  if (loading) {
-    return (
-      <Modal open={open} onClose={handleClose}>
-        <Box sx={modalStyle}>
-          <CircularProgress />
-        </Box>
-      </Modal>
-    );
-  }
-
-  // Render modal content once loading is complete
   return (
     <Modal open={open} onClose={handleClose}>
       <Box sx={modalStyle}>
-        <Typography variant="h4">{character.name}</Typography>
-        <Typography>Height: {character.height}m</Typography>
-        <Typography>Mass: {character.mass}kg</Typography>
-        <Typography>Date Added: {formatDate(character.created)}</Typography>
-        <Typography>Films: {character.films.length}</Typography>
-        <Typography>Birth Year: {character.birth_year}</Typography>
-        {homeworld && (
+        {loading ? (
+            <CircularProgress />
+        ) : (
           <>
-            <Typography>Homeworld: {homeworld.name}</Typography>
-            <Typography>Terrain: {homeworld.terrain}</Typography>
-            <Typography>Climate: {homeworld.climate}</Typography>
-            <Typography>Population: {homeworld.population}</Typography>
+            <Typography variant="h4">{character.name}</Typography>
+            <Typography>Height: {character.height}m</Typography>
+            <Typography>Mass: {character.mass}kg</Typography>
+            <Typography>Date Added: {formatDate(character.created)}</Typography>
+            <Typography>Films: {character.films.length}</Typography>
+            <Typography>Birth Year: {character.birth_year}</Typography>
+            {homeworld && (
+              <>
+                <Typography>Homeworld: {homeworld.name}</Typography>
+                <Typography>Terrain: {homeworld.terrain}</Typography>
+                <Typography>Climate: {homeworld.climate}</Typography>
+                <Typography>Population: {homeworld.population}</Typography>
+              </>
+            )}
           </>
         )}
       </Box>
