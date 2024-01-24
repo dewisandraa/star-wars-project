@@ -1,5 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap');
 
 body {
   font-family: 'Orbitron', sans-serif;
+}
+
+.text-regular {
+  font-weight: 500;
+}
+
+.text-bold {
+  font-weight: 700;
 }

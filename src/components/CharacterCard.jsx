@@ -40,7 +40,7 @@ const CharacterCard = ({ character, randomPhotoUrl, openModal }) => {
         <CardContent>
           <Typography
             variant="h5"
-            sx={{ fontFamily: 'Orbitron', color: 'white', b: 4 }}
+            sx={{ fontFamily: 'Orbitron', color: 'white', fontWeight: 700}}
           >
             {character.name}
           </Typography>
