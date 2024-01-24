@@ -70,7 +70,7 @@ const StarWarsCharacters = () => {
         variant="outlined"
         value={searchTerm}
         onChange={handleSearch}
-        sx={{ marginY: '20px', width: '300px' }}
+        sx={{ marginY: '20px', width: '80%', maxWidth: 300, height: 'auto' }}
       />
       <div
         style={{

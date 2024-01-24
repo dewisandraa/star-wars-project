@@ -28,8 +28,9 @@ const CharacterCard = ({ character, randomPhotoUrl, openModal }) => {
         margin: '28px',
         backgroundColor: getCardColor(character.species[0]),
         borderRadius: '5px',
-        width: '330px',
-        height: '370px',
+        width: '80%',
+        maxWidth: 330,
+        height: 'auto',
       }}
       sx={{
         '&:hover': {
@@ -47,6 +48,8 @@ const CharacterCard = ({ character, randomPhotoUrl, openModal }) => {
             style={{
               borderRadius: '5px',
               display: imageLoaded ? 'block' : 'none',
+              maxWidth: '100%',
+              height: 'auto',
             }}
             onLoad={() => setImageLoaded(true)}
           />
