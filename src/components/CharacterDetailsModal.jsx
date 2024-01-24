@@ -41,7 +41,9 @@ const CharacterDetailsModal = ({
           <CircularProgress />
         ) : (
           <>
-            <Typography variant="h4" sx={{ pb: 3 }}>{character.name}</Typography>
+            <Typography variant="h4" sx={{ pb: 3 }}>
+              {character.name}
+            </Typography>
             <Typography>Height: {character.height}m</Typography>
             <Typography>Mass: {character.mass}kg</Typography>
             <Typography>Date Added: {formatDate(character.created)}</Typography>
