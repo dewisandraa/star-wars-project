@@ -10,12 +10,14 @@ import {
 
 const CharacterCard = ({ character, randomPhotoUrl, openModal }) => {
   const [imageLoaded, setImageLoaded] = useState(false)
-  const colorArray = ["#263569", "#46301a", "#ab2c2e", "#415c7a"]
+  const colorArray = ['#263569', '#46301a', '#ab2c2e', '#415c7a']
 
   const getCardColor = species => {
-    const speciesIndex = character.species.findIndex(speciesUrl => speciesUrl === species);
-    const colorIndex = speciesIndex >= 0 ? speciesIndex % colorArray.length : 1;
-    return colorArray[colorIndex];
+    const speciesIndex = character.species.findIndex(
+      speciesUrl => speciesUrl === species,
+    )
+    const colorIndex = speciesIndex >= 0 ? speciesIndex % colorArray.length : 1
+    return colorArray[colorIndex]
   }
 
   return (
@@ -40,7 +42,7 @@ const CharacterCard = ({ character, randomPhotoUrl, openModal }) => {
         <CardContent>
           <Typography
             variant="h5"
-            sx={{ fontFamily: 'Orbitron', color: 'white', fontWeight: 700}}
+            sx={{ fontFamily: 'Orbitron', color: 'white', fontWeight: 700 }}
           >
             {character.name}
           </Typography>
