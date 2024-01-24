@@ -41,22 +41,16 @@ const CharacterDetailsModal = ({
           <CircularProgress />
         ) : (
           <>
-            <Typography variant="h4" sx={{ pb: 3 }}>
-              {character.name}
-            </Typography>
+            <Typography variant="h4" sx={{ pb: 3 }}>{character.name}</Typography>
             <Typography>Height: {character.height}m</Typography>
             <Typography>Mass: {character.mass}kg</Typography>
             <Typography>Date Added: {formatDate(character.created)}</Typography>
             <Typography>Films: {character.films.length}</Typography>
             <Typography>Birth Year: {character.birth_year}</Typography>
-            {homeworld && (
-              <>
-                <Typography>Homeworld: {homeworld.name}</Typography>
-                <Typography>Terrain: {homeworld.terrain}</Typography>
-                <Typography>Climate: {homeworld.climate}</Typography>
-                <Typography>Population: {homeworld.population}</Typography>
-              </>
-            )}
+            <Typography>Homeworld: {homeworld.name}</Typography>
+            <Typography>Terrain: {homeworld.terrain}</Typography>
+            <Typography>Climate: {homeworld.climate}</Typography>
+            <Typography>Population: {homeworld.population}</Typography>
           </>
         )}
       </Box>
