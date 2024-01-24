@@ -41,18 +41,22 @@ const CharacterDetailsModal = ({
           <CircularProgress />
         ) : (
           <>
-            <Typography variant="h4" sx={{ pb: 3 }}>
+            <Typography variant="h4" sx={{ pb: 3, fontWeight: 500 }}>
               {character.name}
             </Typography>
-            <Typography>Height: {character.height}m</Typography>
-            <Typography>Mass: {character.mass}kg</Typography>
-            <Typography>Date Added: {formatDate(character.created)}</Typography>
-            <Typography>Films: {character.films.length}</Typography>
-            <Typography>Birth Year: {character.birth_year}</Typography>
-            <Typography>Homeworld: {homeworld.name}</Typography>
-            <Typography>Terrain: {homeworld.terrain}</Typography>
-            <Typography>Climate: {homeworld.climate}</Typography>
-            <Typography>Population: {homeworld.population}</Typography>
+            <div className="text-body" style={{ color: '#FFD700' }}>
+              <Typography>Height: {character.height}m</Typography>
+              <Typography>Mass: {character.mass}kg</Typography>
+              <Typography>
+                Date Added: {formatDate(character.created)}
+              </Typography>
+              <Typography>Films: {character.films.length}</Typography>
+              <Typography>Birth Year: {character.birth_year}</Typography>
+              <Typography>Homeworld: {homeworld.name}</Typography>
+              <Typography>Terrain: {homeworld.terrain}</Typography>
+              <Typography>Climate: {homeworld.climate}</Typography>
+              <Typography>Population: {homeworld.population}</Typography>
+            </div>
           </>
         )}
       </Box>

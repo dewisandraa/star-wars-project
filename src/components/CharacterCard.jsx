@@ -40,12 +40,7 @@ const CharacterCard = ({ character, randomPhotoUrl, openModal }) => {
     >
       <CardActionArea onClick={() => openModal(character)}>
         <CardContent>
-          <Typography
-            variant="h5"
-            sx={{ fontFamily: 'Orbitron', color: 'white', fontWeight: 700 }}
-          >
-            {character.name}
-          </Typography>
+          <Typography variant="h5">{character.name}</Typography>
           <img
             src={randomPhotoUrl}
             alt={character.name}

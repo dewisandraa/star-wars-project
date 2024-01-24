@@ -54,11 +54,13 @@ npm install
   The stylesheet specifically crafted for styling the StarWarsCharacters component, ensuring a cohesive and visually appealing UI.
 
 # Usage
+
 1. Run the development server:
+
 ```bash
 npm run dev
 ```
+
 2. Open your browser and navigate to http://localhost:3000.
 
 3. Explore Star Wars characters, search for specific characters, and view detailed information.
-

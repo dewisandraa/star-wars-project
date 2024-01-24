@@ -1,7 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Oswald:wght@300;400&display=swap');
 
-body {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Orbitron', sans-serif;
+}
+
+.text-body {
+  font-family: 'Oswald', sans-serif;
 }
 
 .text-regular {
