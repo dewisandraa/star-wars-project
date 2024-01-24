@@ -61,6 +61,6 @@ npm install
 npm run dev
 ```
 
-2. Open your browser and navigate to http://localhost:3000.
+2. Open your browser and navigate to http://localhost:5173/.
 
 3. Explore Star Wars characters, search for specific characters, and view detailed information.
