@@ -10,7 +10,6 @@ const SWAPI_PEOPLE_API = 'https://swapi.dev/api/people/'
 const StarWarsCharacters = () => {
   const [characters, setCharacters] = useState([])
   const [loading, setLoading] = useState(true)
-  // const [imagesLoading, setImagesLoading] = useState([]);
   const [selectedCharacter, setSelectedCharacter] = useState(null)
   const [homeworld, setHomeworld] = useState(null)
   const [homeworldLoading, setHomeworldLoading] = useState(false)
@@ -22,10 +21,7 @@ const StarWarsCharacters = () => {
     try {
       const response = await axios.get(SWAPI_PEOPLE_API)
       const fetchedCharacters = response.data.results
-      const filteredCharacters = fetchedCharacters.filter(character =>
-        character.name.toLowerCase().includes(searchTerm.toLowerCase()),
-      )
-      setCharacters(filteredCharacters)
+      setCharacters(fetchedCharacters)
     } catch (error) {
       console.error('Error fetching data:', error)
     } finally {
@@ -49,7 +45,6 @@ const StarWarsCharacters = () => {
       console.error('Error fetching homeworld data:', error)
     } finally {
       setHomeworldLoading(false)
-      setIsModalOpen(true)
     }
   }
 
@@ -59,23 +54,7 @@ const StarWarsCharacters = () => {
   }
 
   const handleSearch = event => {
-    const searchTerm = event.target.value.toLowerCase()
-    setSearchTerm(searchTerm)
-  }
-
-  if (loading) {
-    return (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh',
-        }}
-      >
-        <CircularProgress size={50} />
-      </div>
-    )
+    setSearchTerm(event.target.value.toLowerCase())
   }
 
   return (
@@ -84,11 +63,10 @@ const StarWarsCharacters = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        minHeight: '100vh',
       }}
     >
       <TextField
-        label="Search character"
+        label="Search Character"
         variant="outlined"
         value={searchTerm}
         onChange={handleSearch}
@@ -100,21 +78,26 @@ const StarWarsCharacters = () => {
           flexWrap: 'wrap',
           justifyContent: 'center',
           alignItems: 'center',
-          minHeight: '100vh',
+          height: '100vh',
         }}
       >
-        {characters.map(
-          (character, index) =>
-            (character.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              !searchTerm) && (
-              <CharacterCard
-                key={character.name}
-                character={character}
-                index={index}
-                randomPhotoUrl={`https://picsum.photos/id/${10 + index}/300/300`}
-                openModal={openModal}
-              />
-            ),
+        {loading ? (
+          <CircularProgress size={50} />
+        ) : (
+          characters.map(
+            (character, index) =>
+              (character.name
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase()) ||
+                !searchTerm) && (
+                <CharacterCard
+                  key={character.name}
+                  character={character}
+                  randomPhotoUrl={`https://picsum.photos/id/${10 + index}/300/300`}
+                  openModal={openModal}
+                />
+              ),
+          )
         )}
       </div>
       <CharacterDetailsModal

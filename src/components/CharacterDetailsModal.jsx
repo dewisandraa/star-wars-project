@@ -84,5 +84,4 @@ CharacterDetailsModal.propTypes = {
   loading: PropTypes.bool.isRequired,
 }
 
-
 export default CharacterDetailsModal
