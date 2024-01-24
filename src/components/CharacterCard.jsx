@@ -7,17 +7,15 @@ import {
   Typography,
   CardActionArea,
 } from '@mui/material'
-import { red, teal } from '@mui/material/colors'
 
 const CharacterCard = ({ character, randomPhotoUrl, openModal }) => {
   const [imageLoaded, setImageLoaded] = useState(false)
+  const colorArray = ["#263569", "#46301a", "#ab2c2e", "#415c7a"]
 
   const getCardColor = species => {
-    const speciesColors = {
-      'https://swapi.dev/api/species/2/': red[700],
-    }
-
-    return speciesColors[species] || teal[500]
+    const speciesIndex = character.species.findIndex(speciesUrl => speciesUrl === species);
+    const colorIndex = speciesIndex >= 0 ? speciesIndex % colorArray.length : 1;
+    return colorArray[colorIndex];
   }
 
   return (
