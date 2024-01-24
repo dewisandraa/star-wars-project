@@ -1,6 +1,7 @@
 import { createTheme } from '@mui/material/styles'
+import { responsiveFontSizes } from '@mui/material'
 
-const theme = createTheme({
+let theme = createTheme({
   typography: {
     fontFamily: 'Orbitron, sans-serif',
   },
@@ -14,5 +15,7 @@ const theme = createTheme({
     },
   },
 })
+
+theme = responsiveFontSizes(theme)
 
 export default theme
